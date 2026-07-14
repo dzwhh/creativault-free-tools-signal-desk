@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /free-tools
+Allow: /zh/free-tools
+Disallow: /*?q=
+Disallow: /*?state=
+Disallow: /*?prototype=
+
+Sitemap: https://creativault.ai/free-tools-sitemap.xml
