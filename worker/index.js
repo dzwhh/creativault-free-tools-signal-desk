@@ -10,13 +10,12 @@ export default {
       return new Response('Static asset binding unavailable', { status: 503 })
     }
 
-    const response = await env.ASSETS.fetch(request)
-    if (response.status !== 404 || request.method !== 'GET') return response
-
     const pathname = new URL(request.url).pathname
     const isApplicationRoute = !pathname.split('/').pop()?.includes('.')
-    if (!isApplicationRoute) return response
+    const response = await env.ASSETS.fetch(request)
+    const isAssetMiss = response.status === 404 || (response.status >= 300 && response.status < 400)
+    if (request.method !== 'GET' || !isApplicationRoute || !isAssetMiss) return response
 
-    return env.ASSETS.fetch(assetRequest(request, '/index.html'))
+    return env.ASSETS.fetch(assetRequest(request, '/'))
   },
 }
