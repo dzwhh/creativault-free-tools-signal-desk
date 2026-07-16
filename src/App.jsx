@@ -6,7 +6,9 @@ import {
   UserCheck, Video, X, Zap,
 } from 'lucide-react'
 import { categoryCopy, getTool, hubCopy, liveSignals, tools, uiCopy } from './data.js'
+import { homeCopy } from './home-data.js'
 import PrimaryVisual from './Visuals.jsx'
+import HomePage from './Home.jsx'
 
 const iconMap = {
   'user-check': UserCheck, mail: Mail, video: Video, handshake: Handshake,
@@ -21,8 +23,9 @@ function useRoute() {
     const parts = window.location.pathname.split('/').filter(Boolean)
     const locale = parts[0] === 'zh' ? 'zh' : 'en'
     const offset = locale === 'zh' ? 1 : 0
-    const slug = parts[offset] === 'free-tools' ? parts[offset + 1] : null
-    return { locale, slug }
+    const isFreeTools = parts[offset] === 'free-tools'
+    const slug = isFreeTools ? parts[offset + 1] : null
+    return { locale, slug, isFreeTools }
   }
   const [route, setRoute] = useState(get)
   useEffect(() => {
@@ -460,9 +463,26 @@ function updateSeo(tool, locale) {
   structuredData.textContent = JSON.stringify({ '@context': 'https://schema.org', '@graph': [primary, breadcrumb] })
 }
 
+function updateHomeSeo() {
+  document.documentElement.lang = 'en'
+  document.title = homeCopy.meta.title
+  const meta = document.querySelector('meta[name="description"]')
+  if (meta) meta.content = homeCopy.meta.description
+  let robots = document.querySelector('meta[name="robots"]')
+  if (!robots) { robots = document.createElement('meta'); robots.name = 'robots'; document.head.appendChild(robots) }
+  robots.content = 'index, follow'
+  let canonical = document.head.querySelector('link[rel="canonical"]:not([hreflang])')
+  if (!canonical) { canonical = document.createElement('link'); canonical.rel = 'canonical'; document.head.appendChild(canonical) }
+  canonical.href = `${window.location.origin}${window.location.pathname}`
+}
+
 export default function App() {
-  const { locale, slug, navigate } = useRoute()
+  const { locale, slug, isFreeTools, navigate } = useRoute()
   const tool = useMemo(() => getTool(slug), [slug])
-  useEffect(() => updateSeo(tool, locale), [tool, locale])
+  useEffect(() => {
+    if (isFreeTools) updateSeo(tool, locale)
+    else updateHomeSeo()
+  }, [tool, locale, isFreeTools])
+  if (!isFreeTools) return <HomePage navigate={navigate} />
   return tool ? <ToolPage key={`${locale}-${tool.slug}`} tool={tool} locale={locale} navigate={navigate} /> : <HubPage locale={locale} navigate={navigate} />
 }
