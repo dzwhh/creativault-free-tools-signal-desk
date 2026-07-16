@@ -18,6 +18,8 @@ const iconMap = {
 
 const states = ['idle', 'validating', 'running', 'preview', 'signup', 'full', 'paid', 'partial', 'noresult', 'ratelimit', 'error']
 
+const marketingPages = new Set(['features', 'pricing', 'extension', 'blog', 'contact', 'skills'])
+
 function useRoute() {
   const get = () => {
     const parts = window.location.pathname.split('/').filter(Boolean)
@@ -25,7 +27,8 @@ function useRoute() {
     const offset = locale === 'zh' ? 1 : 0
     const isFreeTools = parts[offset] === 'free-tools'
     const slug = isFreeTools ? parts[offset + 1] : null
-    return { locale, slug, isFreeTools }
+    const page = !isFreeTools && marketingPages.has(parts[offset]) ? parts[offset] : 'home'
+    return { locale, slug, isFreeTools, page }
   }
   const [route, setRoute] = useState(get)
   useEffect(() => {
@@ -390,7 +393,7 @@ function ToolPage({ tool, locale, navigate }) {
 
 function SiteFooter({ locale, navigate }) {
   const base = locale === 'zh' ? '/zh' : ''
-  return <footer className="site-footer"><button className="brand" onClick={() => navigate(`${base}/free-tools`)}>creativault<span>.</span></button><p>{locale === 'zh' ? '把市场变化变成可执行信号' : 'Turn market change into actionable signals'}</p><span>© 2026 CreatiVault</span></footer>
+  return <footer className="site-footer"><button className="brand" onClick={() => navigate(`${base}/free-tools`)}><img className="brand-mark-img" src="/logo-mark.png" alt="" width="26" height="26" />CreatiVault</button><p>{locale === 'zh' ? '把市场变化变成可执行信号' : 'Turn market change into actionable signals'}</p><span>© 2026 CreatiVault</span></footer>
 }
 
 function updateSeo(tool, locale) {
@@ -446,11 +449,12 @@ function updateSeo(tool, locale) {
   structuredData.textContent = JSON.stringify({ '@context': 'https://schema.org', '@graph': [primary, breadcrumb] })
 }
 
-function updateHomeSeo() {
+function updateHomeSeo(page = 'home') {
+  const pageMeta = page === 'home' ? homeCopy.meta : homeCopy.pages[page].meta
   document.documentElement.lang = 'en'
-  document.title = homeCopy.meta.title
+  document.title = pageMeta.title
   const meta = document.querySelector('meta[name="description"]')
-  if (meta) meta.content = homeCopy.meta.description
+  if (meta) meta.content = pageMeta.description
   let robots = document.querySelector('meta[name="robots"]')
   if (!robots) { robots = document.createElement('meta'); robots.name = 'robots'; document.head.appendChild(robots) }
   robots.content = 'index, follow'
@@ -460,12 +464,12 @@ function updateHomeSeo() {
 }
 
 export default function App() {
-  const { locale, slug, isFreeTools, navigate } = useRoute()
+  const { locale, slug, isFreeTools, page, navigate } = useRoute()
   const tool = useMemo(() => getTool(slug), [slug])
   useEffect(() => {
     if (isFreeTools) updateSeo(tool, locale)
-    else updateHomeSeo()
-  }, [tool, locale, isFreeTools])
-  if (!isFreeTools) return <HomePage navigate={navigate} />
+    else updateHomeSeo(page)
+  }, [tool, locale, isFreeTools, page])
+  if (!isFreeTools) return <HomePage navigate={navigate} page={page} />
   return tool ? <ToolPage key={`${locale}-${tool.slug}`} tool={tool} locale={locale} navigate={navigate} /> : <HubPage locale={locale} navigate={navigate} />
 }

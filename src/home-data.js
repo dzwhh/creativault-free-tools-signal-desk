@@ -9,13 +9,13 @@ export const homeCopy = {
 
   nav: {
     items: [
-      { label: 'Features', anchor: 'features' },
+      { label: 'Features', route: '/features' },
       { label: 'Free Tools', route: '/free-tools' },
-      { label: 'Pricing', anchor: 'pricing' },
-      { label: 'Extension', anchor: null },
-      { label: 'Blog', anchor: null },
-      { label: 'Contact', anchor: null },
-      { label: 'Skills', anchor: null, badge: 'NEW' },
+      { label: 'Pricing', route: '/pricing' },
+      { label: 'Extension', route: '/extension' },
+      { label: 'Blog', route: '/blog' },
+      { label: 'Contact', route: '/contact' },
+      { label: 'Skills', route: '/skills', badge: 'NEW' },
     ],
     signIn: 'Sign in',
     signUp: 'Sign up',
@@ -168,6 +168,169 @@ export const homeCopy = {
     description: 'Subscribe to our weekly newsletter for the latest global creative trends, marketing case studies, and platform updates. Curated weekly content to power your creative decisions.',
     placeholder: 'Enter your email address',
     button: 'Subscribe Now',
+  },
+
+  pages: {
+    features: {
+      meta: {
+        title: 'Features | CreatiVault',
+        description: 'Unify ad intel, creative analysis, and AI-driven discovery to spot opportunities faster.',
+      },
+    },
+    pricing: {
+      meta: {
+        title: 'Pricing | CreatiVault',
+        description: 'Simple pricing for startups, small businesses, medium scale businesses and enterprises.',
+      },
+    },
+    extension: {
+      meta: {
+        title: 'Browser Extension - Free TikTok Creator Analytics & Video Downloader | CreatiVault',
+        description: 'Analyze creators, discover similar influencers, download videos, and manage your favorites — right in your browser.',
+      },
+      hero: {
+        kicker: 'Browser Extension',
+        title: 'Your TikTok Marketing Toolkit, Right in Your Browser',
+        subtitle: 'Analyze creators, discover similar influencers, download videos, and manage your favorites',
+        ctas: [
+          { label: "Add to Chrome — It's Free", kind: 'dark' },
+          { label: 'See Features', kind: 'light', anchor: 'extension-features' },
+        ],
+      },
+      features: {
+        title: 'Everything You Need, One Click Away',
+        items: [
+          { icon: 'chart', tone: 'blue', title: 'Creator Analytics', description: 'Audience demographics, engagement metrics, and performance insights on any creator profile.' },
+          { icon: 'users', tone: 'green', title: 'Similar Creator Discovery', description: 'Find lookalike influencers via audience overlap and content style in one click.' },
+          { icon: 'download', tone: 'amber', title: 'Bulk Video Download', description: 'Download TikTok videos in bulk for competitor research and creative analysis.' },
+          { icon: 'folder', tone: 'blue', title: 'Favorites Management', description: 'Organize creators into folders and collaborate with your team on shortlists.' },
+        ],
+      },
+      steps: {
+        title: 'Get Started in Minutes',
+        items: [
+          { title: 'Install the Extension', description: 'Add it free from the Chrome Web Store — no account required to start.' },
+          { title: 'Browse TikTok', description: 'The toolkit activates automatically whenever you open a creator profile.' },
+          { title: 'Analyze & Discover', description: 'See analytics, surface similar creators, and download videos in one click.' },
+          { title: 'Save & Organize', description: 'Sort creators into folders and export data straight into your campaigns.' },
+        ],
+      },
+      closing: {
+        title: 'Ready to Supercharge Your TikTok Marketing?',
+        description: 'Join thousands of marketers using CreatiVault to research creators faster.',
+        cta: 'Install Free Extension',
+      },
+    },
+    blog: {
+      meta: {
+        title: 'Blog | CreatiVault',
+        description: 'Discover insightful resources and expert advice from our seasoned team to elevate your knowledge.',
+      },
+      title: 'Blog',
+      description: 'Discover insightful resources and expert advice from our seasoned team to elevate your knowledge.',
+      categories: ['All', 'Company'],
+      author: 'Theodore',
+      posts: [
+        { slug: 'average-ctr-ecommerce-2026', category: 'Company', tone: 'blue', title: 'Average CTR for Ecommerce in 2026', excerpt: '2026 ecommerce CTR benchmarks by platform: Facebook 3.30%, Google 2.38%, TikTok 2.17% — with beauty reaching as high as 19.39%.', date: 'Jun 24, 2026' },
+        { slug: 'average-ctr-gaming-2026', category: 'Company', tone: 'amber', title: 'Average CTR for Gaming in 2026', excerpt: 'Gaming benchmarks by platform, game type, and market: TikTok 3.27%, Facebook 2.73%, Google 1.55% — and why Indonesia over-performs on TikTok.', date: 'Jun 10, 2026' },
+        { slug: 'meta-ads-library-guide', category: 'Company', tone: 'green', title: 'Meta Ads Library: The Complete Guide to Competitor Creative Research (2026)', excerpt: 'A practical how-to for searching competitor ads, decoding their creative strategy, and turning findings into briefs.', date: 'May 28, 2026' },
+        { slug: 'trending-products-tiktok-amazon', category: 'Company', tone: 'blue', title: 'How to Find Trending Products on TikTok and Amazon (2026 Guide)', excerpt: 'Cross-platform product research: spot breakout products early by combining TikTok signals with Amazon movers.', date: 'May 14, 2026' },
+        { slug: 'influencer-outreach-workflow', category: 'Company', tone: 'green', title: 'The Influencer Outreach Workflow: A Repeatable System for DTC Teams', excerpt: 'A six-stage system to find, contact, and track creators at scale — from shortlist to signed collaboration.', date: 'Apr 30, 2026' },
+        { slug: 'what-is-creativault', category: 'Company', tone: 'amber', title: 'What is CreatiVault', excerpt: 'An intro to the AI-powered ad creative platform: what it does, who it is for, and how teams use it to lower CAC.', date: 'Apr 16, 2026' },
+      ],
+    },
+    contact: {
+      meta: {
+        title: 'Contact Us | CreatiVault',
+        description: 'If you have any questions or feedback, please reach out to our team.',
+      },
+      title: 'Contact Us',
+      description: 'If you have any questions or feedback, please reach out to our team',
+      emails: [
+        { label: 'General', address: 'contact@creativault.ai' },
+        { label: 'Support', address: 'support@creativault.ai' },
+      ],
+      form: {
+        name: { label: 'Name', placeholder: 'Your name' },
+        email: { label: 'Email', placeholder: 'you@company.com' },
+        company: { label: 'Company', placeholder: 'Company name' },
+        message: { label: 'Message', placeholder: 'How can we help?' },
+        submit: 'Submit',
+        sent: 'Thanks — we will get back to you shortly.',
+      },
+    },
+    skills: {
+      meta: {
+        title: 'Skills - Supercharge Your AI Agent | CreatiVault',
+        description: 'Let your AI coding agent search and collect creator data from TikTok, YouTube, and Instagram. Compatible with 40+ AI agents.',
+      },
+      hero: {
+        kicker: 'CreatiVault Skills',
+        title: 'Supercharge Your AI Agent with CreatiVault Skills',
+        subtitle: 'Search and collect creator data from TikTok, YouTube, and Instagram — compatible with 40+ AI coding agents like Cursor, Claude Code, Kiro, and GitHub Copilot.',
+        ctas: [
+          { label: 'Quick Start', kind: 'dark' },
+          { label: 'Get Started Free', kind: 'light' },
+        ],
+      },
+      setup: {
+        title: 'Quick Setup',
+        description: 'Three steps from install to your first creator search.',
+        steps: [
+          { title: 'Install', description: 'Run the install command in your agent.' },
+          { title: 'Configure', description: 'Set your API key and email.' },
+          { title: 'Start Using', description: 'Talk to your agent naturally.' },
+        ],
+        terminal: ['npx skills add creativault/skills', 'export CV_API_KEY=your_api_key', 'export CV_USER_IDENTITY=you@company.com'],
+      },
+      value: {
+        title: 'Say Goodbye to Inefficient Creator Marketing',
+        cards: [
+          { icon: 'zap', tone: 'blue', title: 'Instant Matching', description: 'Match the right creators in seconds instead of days of manual screening.' },
+          { icon: 'mail', tone: 'green', title: 'Batch Outreach', description: 'Generate and batch-send personalized invitations automatically.' },
+          { icon: 'handshake', tone: 'amber', title: 'Auto Negotiation', description: 'Automate price negotiation and keep every thread on track.' },
+        ],
+        stats: [
+          ['10M+', 'creator profiles'],
+          ['3', 'platforms covered'],
+          ['40+', 'AI agents supported'],
+          ['<5 min', 'to deploy'],
+        ],
+      },
+      capabilities: {
+        title: 'What You Can Do',
+        items: [
+          { icon: 'search', title: 'Search Creators', description: 'Multi-dimensional, real-time search across TikTok, YouTube, and Instagram.' },
+          { icon: 'layers', title: 'Batch Collection', description: 'Submit tasks by links, usernames, or keywords — async with task tracking.' },
+          { icon: 'clock', title: 'Task Tracking', description: 'Status checks, auto-polling, and paginated results.' },
+          { icon: 'download', title: 'Data Export', description: 'Download URLs and full-analytics profile exports.' },
+        ],
+        platforms: ['TikTok', 'YouTube', 'Instagram'],
+        methods: ['Search', 'Link', 'Username', 'Keyword'],
+      },
+      compatibility: {
+        title: 'Compatible with Your AI Assistant',
+        agents: ['Cursor', 'Claude Code', 'Kiro', 'GitHub Copilot', 'Codex', 'Windsurf', '40+ more…'],
+      },
+      faq: {
+        title: 'Frequently asked questions',
+        items: [
+          ['Which AI agents are supported?', 'Any agent that supports the open skills format — including Cursor, Claude Code, Kiro, GitHub Copilot, Codex, Windsurf, and 40+ more.'],
+          ['Which platforms are covered?', 'TikTok, YouTube, and Instagram. Every platform supports search, link, username, and keyword collection methods.'],
+          ['How do I get an API key?', 'Create a free CreatiVault account and generate an API key from your dashboard — it takes under a minute.'],
+          ['Do I need to know how to code?', 'No. Once installed, you talk to your agent naturally — “find beauty creators on TikTok with 100k+ followers” just works.'],
+          ['How long does deployment take?', 'Under 5 minutes: one install command, two environment variables, and you are ready to search.'],
+        ],
+      },
+      closing: {
+        title: 'Ready to Automate Your Creator Marketing?',
+        description: '500 free trial credits. No credit card required.',
+        ctas: [
+          { label: 'Book a Demo', kind: 'light' },
+          { label: 'Get Started Free', kind: 'dark' },
+        ],
+      },
+    },
   },
 
   footer: {

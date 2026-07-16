@@ -5,10 +5,19 @@ import {
   Store, TrendingUp, UserCheck, Users, Video, X, Zap,
 } from 'lucide-react'
 import { homeCopy } from './home-data.js'
+import { PageHero, ExtensionPage, BlogPage, ContactPage, SkillsPage } from './Pages.jsx'
 import './home.css'
 
 function ArrowButtonIcon() {
   return <span className="button-icon"><ArrowRight size={17} aria-hidden="true" /></span>
+}
+
+export function BrandLogo({ navigate }) {
+  return (
+    <button className="brand" onClick={() => navigate('/')} aria-label="CreatiVault home">
+      <img className="brand-mark-img" src="/logo-mark.png" alt="" width="26" height="26" />CreatiVault
+    </button>
+  )
 }
 
 const platformIcons = {
@@ -23,15 +32,12 @@ export function SiteHeader({ navigate, active = 'home', locale = 'en', onSwitchL
   const base = locale === 'zh' ? '/zh' : ''
   const go = (item) => {
     setOpen(false)
-    if (item.route) { navigate(`${base}${item.route}`); return }
-    if (!item.anchor) return
-    if (active === 'home') document.getElementById(item.anchor)?.scrollIntoView({ behavior: 'smooth' })
-    else navigate(`/#${item.anchor}`)
+    if (item.route) navigate(item.route === '/free-tools' ? `${base}${item.route}` : item.route)
   }
-  const isActive = (item) => active === 'free-tools' && item.route === '/free-tools'
+  const isActive = (item) => active !== 'home' && item.route === `/${active}`
   return (
     <header className="site-header home-header">
-      <button className="brand" onClick={() => navigate('/')} aria-label="CreatiVault home">creativault<span>.</span></button>
+      <BrandLogo navigate={navigate} />
       <nav className="desktop-nav home-nav" aria-label="Primary navigation">
         {nav.items.map((item) => (
           <button key={item.label} className={isActive(item) ? 'active' : ''} onClick={() => go(item)}>
@@ -158,7 +164,7 @@ const showcaseStats = {
   creator: [['Matches', '64'], ['Vetted', '100%'], ['Shortlist', '5 min']],
 }
 
-function Showcase() {
+function Showcase({ hideHeading = false }) {
   const copy = homeCopy.showcase
   const railRef = useRef(null)
   const [active, setActive] = useState(0)
@@ -181,10 +187,12 @@ function Showcase() {
   return (
     <section className="home-showcase ambient-section">
       <div className="page-container">
-        <div className="home-section-heading">
-          <h2>{copy.title}</h2>
-          <p>{copy.description}</p>
-        </div>
+        {!hideHeading && (
+          <div className="home-section-heading">
+            <h2>{copy.title}</h2>
+            <p>{copy.description}</p>
+          </div>
+        )}
         <div className="showcase-rail" ref={railRef}>
           {copy.modules.map((module) => {
             const Icon = showcaseIcons[module.key] || Sparkles
@@ -282,7 +290,7 @@ function HomeFaq() {
   const copy = homeCopy.faq
   const [open, setOpen] = useState(0)
   return (
-    <section className="faq page-container home-faq">
+    <section className="faq page-container home-faq" id="faq">
       <div className="section-heading"><div><span className="section-kicker">FAQ</span><h2>{copy.title}</h2></div></div>
       <div className="faq-list">
         {copy.items.map(([question, answer], index) => (
@@ -312,13 +320,15 @@ function Newsletter() {
   )
 }
 
+const footerRoutes = { Features: '/features', Pricing: '/pricing', Blog: '/blog', Skills: '/skills', Contact: '/contact', FAQ: '/#faq' }
+
 function HomeFooter({ navigate }) {
   const copy = homeCopy.footer
   return (
     <footer className="home-footer page-container">
       <div className="home-footer-top">
         <div className="home-footer-brand">
-          <button className="brand" onClick={() => navigate('/')}>creativault<span>.</span></button>
+          <BrandLogo navigate={navigate} />
           <p>{copy.tagline}</p>
           <small>{copy.copyright}<br />{copy.rights}</small>
         </div>
@@ -326,7 +336,12 @@ function HomeFooter({ navigate }) {
           {copy.columns.map((column) => (
             <div key={column.title}>
               <strong>{column.title}</strong>
-              {column.items.map((item) => <button key={item} onClick={() => item === 'Pricing' && document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth' })}>{item}</button>)}
+              {column.items.map((item) => (
+                <button key={item} onClick={() => {
+                  if (item === 'FAQ' && document.getElementById('faq')) { document.getElementById('faq').scrollIntoView({ behavior: 'smooth' }); return }
+                  if (footerRoutes[item]) navigate(footerRoutes[item])
+                }}>{item}</button>
+              ))}
             </div>
           ))}
         </div>
@@ -338,16 +353,16 @@ function HomeFooter({ navigate }) {
   )
 }
 
-export default function HomePage({ navigate }) {
-  // Support anchor jumps (e.g. /#pricing) when arriving from the Free Tools pages.
+export default function HomePage({ navigate, page = 'home' }) {
+  // Support anchor jumps (e.g. /#faq) when arriving from another route.
   useEffect(() => {
     const hash = window.location.hash.slice(1)
     if (hash) setTimeout(() => document.getElementById(hash)?.scrollIntoView({ behavior: 'smooth' }), 80)
-  }, [])
-  return (
-    <>
-      <SiteHeader navigate={navigate} active="home" />
-      <main>
+  }, [page])
+
+  const content = {
+    home: (
+      <>
         <Hero navigate={navigate} />
         <Capabilities />
         <Showcase />
@@ -355,7 +370,34 @@ export default function HomePage({ navigate }) {
         <Pricing />
         <HomeFaq />
         <Newsletter />
-      </main>
+      </>
+    ),
+    features: (
+      <>
+        <PageHero title={homeCopy.showcase.title} subtitle={homeCopy.showcase.description} />
+        <Showcase hideHeading />
+        <Capabilities />
+        <Testimonials />
+        <Newsletter />
+      </>
+    ),
+    pricing: (
+      <>
+        <Pricing />
+        <Testimonials />
+        <Newsletter />
+      </>
+    ),
+    extension: <ExtensionPage />,
+    blog: <BlogPage />,
+    contact: <ContactPage />,
+    skills: <SkillsPage />,
+  }[page]
+
+  return (
+    <>
+      <SiteHeader navigate={navigate} active={page} />
+      <main>{content}</main>
       <HomeFooter navigate={navigate} />
     </>
   )
