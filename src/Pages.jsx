@@ -164,15 +164,30 @@ export function ContactPage() {
 
       <section className="page-container contact-layout">
         <div className="contact-side">
-          {copy.emails.map((item) => (
-            <a className="contact-email-card" href={`mailto:${item.address}`} key={item.address}>
-              <span className="icon-badge blue"><Mail size={20} strokeWidth={1.9} /></span>
-              <div><small>{item.label}</small><strong>{item.address}</strong></div>
-              <ArrowRight size={16} />
-            </a>
-          ))}
+          <div className="contact-side-heading">
+            <h2>{copy.channels.title}</h2>
+            <p>{copy.channels.description}</p>
+          </div>
+          {copy.channels.items.map((item) => {
+            const Icon = pageIcons[item.icon] || Mail
+            return (
+              <div className="contact-email-card" key={item.address}>
+                <span className={`icon-badge ${item.tone}`}><Icon size={20} strokeWidth={1.9} /></span>
+                <div className="contact-email-body">
+                  <strong>{item.label}</strong>
+                  <p>{item.description}</p>
+                  <a href={`mailto:${item.address}`}>{item.address}<ArrowRight size={14} aria-hidden="true" /></a>
+                </div>
+              </div>
+            )
+          })}
+          <p className="contact-reply-note"><Clock3 size={15} aria-hidden="true" />{copy.channels.reply}</p>
         </div>
         <form className="contact-form" onSubmit={(event) => { event.preventDefault(); setSent(true) }}>
+          <div className="contact-form-heading">
+            <h2>{copy.form.title}</h2>
+            <p>{copy.form.description}</p>
+          </div>
           <label><span>{copy.form.name.label}</span><input value={values.name} onChange={set('name')} placeholder={copy.form.name.placeholder} required /></label>
           <label><span>{copy.form.email.label}</span><input type="email" value={values.email} onChange={set('email')} placeholder={copy.form.email.placeholder} required /></label>
           <label><span>{copy.form.company.label}</span><input value={values.company} onChange={set('company')} placeholder={copy.form.company.placeholder} /></label>

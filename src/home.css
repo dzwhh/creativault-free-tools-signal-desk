@@ -172,12 +172,20 @@
 .blog-page-current { min-width: 44px; min-height: 44px; display: grid; place-items: center; border: 1px solid var(--line-strong); border-radius: 50%; font-size: 13px; font-weight: 700; background: var(--ink); color: #fff; }
 
 /* Contact */
-.contact-layout { display: grid; grid-template-columns: 1fr 1.5fr; gap: 24px; padding-bottom: 30px; align-items: start; }
+.contact-layout { display: grid; grid-template-columns: 1fr 1.4fr; gap: 32px; padding-bottom: 30px; align-items: start; }
 .contact-side { display: flex; flex-direction: column; gap: 14px; }
-.contact-email-card { display: grid; grid-template-columns: 40px 1fr auto; align-items: center; gap: 14px; border: 1px solid var(--line-strong); border-radius: 18px; background: #fff; box-shadow: var(--shadow); padding: 20px; text-decoration: none; color: inherit; transition: .18s ease; }
+.contact-side-heading { margin-bottom: 4px; }
+.contact-side-heading h2, .contact-form-heading h2 { margin: 0 0 6px; font-size: 20px; letter-spacing: -.02em; }
+.contact-side-heading p, .contact-form-heading p { margin: 0; color: var(--muted); font-size: 13px; line-height: 1.55; }
+.contact-form-heading { margin-bottom: 4px; }
+.contact-email-card { display: grid; grid-template-columns: 40px 1fr; align-items: start; gap: 14px; border: 1px solid var(--line-strong); border-radius: 18px; background: #fff; box-shadow: var(--shadow); padding: 20px; transition: .18s ease; }
 .contact-email-card:hover { border-color: var(--ink); }
-.contact-email-card small { display: block; color: #8a92a0; font-size: 11px; }
-.contact-email-card strong { font-size: 14px; letter-spacing: -.01em; }
+.contact-email-card .icon-badge { width: 40px; height: 40px; }
+.contact-email-body strong { display: block; font-size: 14.5px; letter-spacing: -.01em; }
+.contact-email-body p { margin: 3px 0 10px; color: var(--muted); font-size: 12.5px; line-height: 1.5; }
+.contact-email-body a { display: inline-flex; align-items: center; gap: 6px; color: var(--blue); font-size: 13px; font-weight: 600; text-decoration: none; }
+.contact-email-body a:hover { text-decoration: underline; }
+.contact-reply-note { display: inline-flex; align-items: center; gap: 7px; margin: 2px 0 0; color: var(--subtle); font-size: 12.5px; }
 .contact-form { border: 1px solid var(--line-strong); border-radius: var(--radius); background: #fff; box-shadow: var(--shadow); padding: 28px; display: flex; flex-direction: column; gap: 16px; }
 .contact-form label { display: flex; flex-direction: column; gap: 6px; font-size: 12px; font-weight: 600; color: #3c4450; }
 .contact-form input, .contact-form textarea { border: 1px solid var(--line-strong); border-radius: 12px; padding: 12px 14px; font: inherit; font-size: 13px; min-height: 44px; outline: none; resize: vertical; }

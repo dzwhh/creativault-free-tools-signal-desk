@@ -246,11 +246,30 @@ export const homeCopy = {
       },
       title: 'Contact Us',
       description: 'If you have any questions or feedback, please reach out to our team',
-      emails: [
-        { label: 'General', address: 'contact@creativault.ai' },
-        { label: 'Support', address: 'support@creativault.ai' },
-      ],
+      channels: {
+        title: 'Email us directly',
+        description: 'Pick the channel that fits and we’ll route your message to the right person.',
+        reply: 'We typically reply within 1 business day.',
+        items: [
+          {
+            icon: 'mail',
+            tone: 'blue',
+            label: 'General inquiries',
+            description: 'Partnerships, press, sales and everything else.',
+            address: 'contact@creativault.ai',
+          },
+          {
+            icon: 'handshake',
+            tone: 'green',
+            label: 'Product support',
+            description: 'Help with your account, billing or the extension.',
+            address: 'support@creativault.ai',
+          },
+        ],
+      },
       form: {
+        title: 'Send us a message',
+        description: 'Fill out the form and we’ll get back to you by email.',
         name: { label: 'Name', placeholder: 'Your name' },
         email: { label: 'Email', placeholder: 'you@company.com' },
         company: { label: 'Company', placeholder: 'Company name' },
