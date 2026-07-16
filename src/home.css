@@ -1,10 +1,28 @@
 /* Marketing homepage — reuses the Free Tools design tokens defined in styles.css */
 
-.home-nav button { position: relative; display: inline-flex; align-items: center; gap: 6px; }
-.home-header .brand, .home-footer .brand { min-height: 44px; }
-.home-header .language-button { min-height: 44px; padding: 9px 12px; }
+.home-nav button { position: relative; display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; }
+.home-header .desktop-nav button:first-child { color: #49515d; background: transparent; box-shadow: none; }
+.home-header .desktop-nav button:first-child:hover { color: var(--ink); }
+.home-header .desktop-nav button.active { color: var(--ink); background: #fff; box-shadow: 0 1px 4px rgba(20,24,31,.06); }
+.home-header .brand, .home-footer .brand { min-height: 44px; white-space: nowrap; }
+.home-header .language-button { min-height: 44px; padding: 9px 12px; white-space: nowrap; }
+.home-header .header-cta { white-space: nowrap; }
+.home-header .header-actions { flex-shrink: 0; }
 .home-header .menu-button { min-width: 44px; min-height: 44px; align-items: center; justify-content: center; }
 .nav-badge { font-style: normal; font-size: 8px; font-weight: 800; letter-spacing: .05em; color: var(--blue); background: var(--blue-soft); padding: 2px 6px; border-radius: 99px; }
+
+/* Header adaptive sizing — shrink the 7-item pill nav progressively so nothing
+   wraps or overlaps before the 980px hamburger breakpoint. */
+@media (max-width: 1280px) {
+  .home-nav button { padding: 9px 12px; font-size: 11.5px; }
+}
+@media (max-width: 1120px) {
+  .home-nav { gap: 0; }
+  .home-nav button { padding: 8px 9px; font-size: 10.5px; gap: 4px; }
+  .home-nav .nav-badge { display: none; }
+  .home-header .language-button { padding: 9px 8px; font-size: 11px; }
+  .home-header .header-cta { min-height: 40px; padding-left: 14px; font-size: 12px; }
+}
 
 .button.light { background: #fff; color: var(--ink); border: 1px solid var(--line-strong); }
 .button.light .button-icon { background: var(--ink); color: #fff; }

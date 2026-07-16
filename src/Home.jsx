@@ -15,27 +15,35 @@ const platformIcons = {
   TikTok: Video, YouTube: Play, Facebook: Users, Snapchat: Zap, 'Google Ads': Search, Shopify: ShoppingBag,
 }
 
-function HomeHeader({ navigate }) {
+// Shared site header — used verbatim by the homepage and the Free Tools pages
+// so both surfaces stay visually consistent and can jump to each other.
+export function SiteHeader({ navigate, active = 'home', locale = 'en', onSwitchLocale }) {
   const { nav } = homeCopy
   const [open, setOpen] = useState(false)
+  const base = locale === 'zh' ? '/zh' : ''
   const go = (item) => {
     setOpen(false)
-    if (item.route) { navigate(item.route); return }
-    if (item.anchor) document.getElementById(item.anchor)?.scrollIntoView({ behavior: 'smooth' })
+    if (item.route) { navigate(`${base}${item.route}`); return }
+    if (!item.anchor) return
+    if (active === 'home') document.getElementById(item.anchor)?.scrollIntoView({ behavior: 'smooth' })
+    else navigate(`/#${item.anchor}`)
   }
+  const isActive = (item) => active === 'free-tools' && item.route === '/free-tools'
   return (
     <header className="site-header home-header">
       <button className="brand" onClick={() => navigate('/')} aria-label="CreatiVault home">creativault<span>.</span></button>
       <nav className="desktop-nav home-nav" aria-label="Primary navigation">
         {nav.items.map((item) => (
-          <button key={item.label} onClick={() => go(item)}>
+          <button key={item.label} className={isActive(item) ? 'active' : ''} onClick={() => go(item)}>
             {item.label}
             {item.badge && <em className="nav-badge">{item.badge}</em>}
           </button>
         ))}
       </nav>
       <div className="header-actions">
-        <button className="language-button">{nav.signIn}</button>
+        {onSwitchLocale
+          ? <button className="language-button" onClick={onSwitchLocale} aria-label={locale === 'zh' ? 'Switch to English' : '切换到中文'}><Globe2 size={16} /><span>{locale === 'zh' ? 'EN' : '中文'}</span></button>
+          : <button className="language-button">{nav.signIn}</button>}
         <button className="button dark header-cta">{nav.signUp}<ArrowButtonIcon /></button>
         <button className="menu-button" onClick={() => setOpen(!open)} aria-expanded={open} aria-label="Open navigation">{open ? <X /> : <Menu />}</button>
       </div>
@@ -47,7 +55,9 @@ function HomeHeader({ navigate }) {
               <ChevronRight size={16} />
             </button>
           ))}
-          <button onClick={() => setOpen(false)}>{nav.signIn}<ChevronRight size={16} /></button>
+          {onSwitchLocale
+            ? <button onClick={() => { setOpen(false); onSwitchLocale() }}>{locale === 'zh' ? 'English' : '中文'}<Globe2 size={16} /></button>
+            : <button onClick={() => setOpen(false)}>{nav.signIn}<ChevronRight size={16} /></button>}
         </div>
       )}
     </header>
@@ -62,9 +72,7 @@ function Hero({ navigate }) {
         <h1>{hero.titleLead}<br /><em>{hero.brand}</em></h1>
         <p className="hero-description">{hero.subtitle}</p>
         <div className="home-hero-ctas">
-          <button className="button dark hero-cta">{hero.ctas[0].label}<ArrowButtonIcon /></button>
-          <button className="button light hero-cta">{hero.ctas[1].label}<ArrowButtonIcon /></button>
-          <button className="button light hero-cta">{hero.ctas[2].label}<ArrowButtonIcon /></button>
+          {hero.ctas.map((cta) => <button key={cta.label} className={`button ${cta.kind} hero-cta`}>{cta.label}<ArrowButtonIcon /></button>)}
         </div>
       </div>
     </section>
@@ -331,9 +339,14 @@ function HomeFooter({ navigate }) {
 }
 
 export default function HomePage({ navigate }) {
+  // Support anchor jumps (e.g. /#pricing) when arriving from the Free Tools pages.
+  useEffect(() => {
+    const hash = window.location.hash.slice(1)
+    if (hash) setTimeout(() => document.getElementById(hash)?.scrollIntoView({ behavior: 'smooth' }), 80)
+  }, [])
   return (
     <>
-      <HomeHeader navigate={navigate} />
+      <SiteHeader navigate={navigate} active="home" />
       <main>
         <Hero navigate={navigate} />
         <Capabilities />

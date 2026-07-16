@@ -1,14 +1,14 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react'
 import {
   ArrowRight, BarChart3, Check, ChevronDown, ChevronRight, Clock3, Download,
-  Eye, Gauge, Globe2, Handshake, LineChart, LockKeyhole, Mail, Menu, Play,
+  Eye, Gauge, Globe2, Handshake, LineChart, LockKeyhole, Mail, Play,
   Radar, RefreshCw, Search, ShieldCheck, Smartphone, Sparkles, TrendingUp,
-  UserCheck, Video, X, Zap,
+  UserCheck, Video, Zap,
 } from 'lucide-react'
 import { categoryCopy, getTool, hubCopy, liveSignals, tools, uiCopy } from './data.js'
 import { homeCopy } from './home-data.js'
 import PrimaryVisual from './Visuals.jsx'
-import HomePage from './Home.jsx'
+import HomePage, { SiteHeader } from './Home.jsx'
 
 const iconMap = {
   'user-check': UserCheck, mail: Mail, video: Video, handshake: Handshake,
@@ -119,29 +119,12 @@ function SignalSelect({ field, value, onChange, locale }) {
 }
 
 function Header({ locale, navigate }) {
-  const copy = uiCopy[locale]
-  const [open, setOpen] = useState(false)
-  const base = locale === 'zh' ? '/zh' : ''
-  const toHome = () => navigate(`${base}/free-tools`)
   const switchLocale = () => {
     const path = window.location.pathname
     const next = locale === 'zh' ? path.replace(/^\/zh/, '') || '/free-tools' : `/zh${path}`
     navigate(next + window.location.search)
   }
-  return (
-    <header className="site-header">
-      <button className="brand" onClick={toHome} aria-label="CreatiVault Free Tools home">creativault<span>.</span></button>
-      <nav className="desktop-nav" aria-label="Primary navigation">
-        {copy.nav.map((item, index) => <button key={item} onClick={() => index === 0 && toHome()}>{item}</button>)}
-      </nav>
-      <div className="header-actions">
-        <button className="language-button" onClick={switchLocale} aria-label={locale === 'zh' ? 'Switch to English' : '切换到中文'}><Globe2 size={16} /><span>{locale === 'zh' ? 'EN' : '中文'}</span></button>
-        <button className="button dark header-cta">{copy.start}<ArrowButtonIcon /></button>
-        <button className="menu-button" onClick={() => setOpen(!open)} aria-expanded={open} aria-label="Open navigation">{open ? <X /> : <Menu />}</button>
-      </div>
-      {open && <div className="mobile-nav">{copy.nav.map((item, index) => <button key={item} onClick={() => { if (index === 0) toHome(); setOpen(false) }}>{item}<ChevronRight size={16} /></button>)}<button onClick={switchLocale}>{locale === 'zh' ? 'English' : '中文'}<Globe2 size={16} /></button></div>}
-    </header>
-  )
+  return <SiteHeader navigate={navigate} active="free-tools" locale={locale} onSwitchLocale={switchLocale} />
 }
 
 function IconBadge({ name, tone = 'blue' }) {

@@ -27,7 +27,6 @@ export const homeCopy = {
     subtitle: 'Spy competitors, spot breakout trends, and lower CAC with data-backed creative decisions.',
     ctas: [
       { label: 'Start for free', kind: 'dark' },
-      { label: 'Free Trial', kind: 'light' },
       { label: 'Install Extension', kind: 'light' },
     ],
   },
