@@ -1,9 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react'
 import {
   ArrowRight, BarChart3, Bot, Check, ChevronDown, ChevronLeft, ChevronRight,
-  Globe2, LineChart, Mail, Menu, Play, Radar, Search, ShoppingBag, Sparkles,
-  Store, TrendingUp, UserCheck, Users, Video, X, Zap,
+  Globe2, LineChart, Mail, Menu, Radar, Search, Sparkles,
+  TrendingUp, UserCheck, Users, X,
 } from 'lucide-react'
+import { BrandIcon, hasBrandIcon } from './brand-icons.jsx'
 import { homeCopy } from './home-data.js'
 import { PageHero, ExtensionPage, BlogPage, ContactPage, SkillsPage } from './Pages.jsx'
 import './home.css'
@@ -20,9 +21,6 @@ export function BrandLogo({ navigate }) {
   )
 }
 
-const platformIcons = {
-  TikTok: Video, YouTube: Play, Facebook: Users, Snapchat: Zap, 'Google Ads': Search, Shopify: ShoppingBag,
-}
 
 // Shared site header — used verbatim by the homepage and the Free Tools pages
 // so both surfaces stay visually consistent and can jump to each other.
@@ -90,10 +88,11 @@ function PlatformMarquee({ platforms }) {
   return (
     <div className="platform-marquee" aria-label="Supported platforms">
       <div className="platform-track">
-        {loop.map((name, index) => {
-          const Icon = platformIcons[name] || Radar
-          return <span className="platform-chip" key={`${name}-${index}`} aria-hidden={index >= platforms.length}><Icon size={15} />{name}</span>
-        })}
+        {loop.map((name, index) => (
+          <span className="platform-chip" key={`${name}-${index}`} aria-hidden={index >= platforms.length}>
+            {hasBrandIcon(name) ? <BrandIcon name={name} size={15} /> : <Radar size={15} />}{name}
+          </span>
+        ))}
       </div>
     </div>
   )

@@ -1,10 +1,11 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react'
 import {
   ArrowRight, BarChart3, Check, ChevronDown, ChevronRight, Clock3, Download,
-  Eye, Gauge, Globe2, Handshake, LineChart, LockKeyhole, Mail, Play,
+  Eye, Gauge, Globe2, Handshake, LineChart, LockKeyhole, Mail,
   Radar, RefreshCw, Search, ShieldCheck, Smartphone, Sparkles, TrendingUp,
   UserCheck, Video, Zap,
 } from 'lucide-react'
+import { BrandIcon, CountryFlag, hasBrandIcon, hasCountryFlag } from './brand-icons.jsx'
 import { categoryCopy, getTool, hubCopy, liveSignals, tools, uiCopy } from './data.js'
 import { homeCopy } from './home-data.js'
 import PrimaryVisual from './Visuals.jsx'
@@ -49,15 +50,15 @@ function ArrowButtonIcon() {
 }
 
 function SelectOptionIcon({ field, option }) {
-  const normalized = option.toLowerCase()
   if (field.type === 'platform') {
-    if (normalized === 'youtube') return <Play size={15} fill="currentColor" />
-    if (normalized === 'instagram') return <Sparkles size={15} />
-    if (normalized === 'tiktok') return <Video size={15} />
-    return <Radar size={15} />
+    return hasBrandIcon(option) ? <BrandIcon name={option} size={15} /> : <Radar size={15} />
   }
-  if (field.key === 'country') return <Globe2 size={15} />
-  if (field.key === 'store') return <Smartphone size={15} />
+  if (field.key === 'country') {
+    return hasCountryFlag(option) ? <CountryFlag name={option} /> : <Globe2 size={15} />
+  }
+  if (field.key === 'store') {
+    return hasBrandIcon(option) ? <BrandIcon name={option} size={15} /> : <Smartphone size={15} />
+  }
   if (field.key === 'window') return <Clock3 size={15} />
   if (field.key === 'industry') return <BarChart3 size={15} />
   return <ChevronDown size={15} />
@@ -359,7 +360,7 @@ function ToolPage({ tool, locale, navigate }) {
       <main className="tool-main">
         <section className={`tool-hero ambient-section ${hasResult ? 'has-result' : ''}`}>
           <div className="tool-hero-copy">
-            <p className="functional-eyebrow signal-eyebrow"><i />Signal {tool.signal} · {tool.shortName.en}</p>
+            <p className="functional-eyebrow signal-eyebrow"><i />Tool {tool.signal} · {tool.shortName.en}</p>
             <h1>{tool.name[locale]}</h1>
             <p className="tool-benefit"><StyledBenefit tool={tool} locale={locale} /></p>
             <p className="tool-description">{tool.description[locale]}</p>
