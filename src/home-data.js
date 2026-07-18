@@ -72,11 +72,6 @@ export const homeCopy = {
         description: 'One click to find winning ads—explore any category or niche, get top-performing creatives, and reveal top advertisers with their ad intelligence.',
       },
       {
-        key: 'ai-partner',
-        title: 'AI Partner-in-Action',
-        description: 'AI-powered creative insights that drive marketing performance—spot winning ads, reveal high-impact hooks, and turn competitor data into campaigns that convert faster.',
-      },
-      {
         key: 'competitor',
         title: 'Competitor Intelligence',
         description: 'See competitor ads and analyze their performance—advertisers, shops, and key metrics at a glance.',
@@ -289,18 +284,23 @@ export const homeCopy = {
         subtitle: 'Search and collect creator data from TikTok, YouTube, and Instagram — compatible with 40+ AI coding agents like Cursor, Claude Code, Kiro, and GitHub Copilot.',
         ctas: [
           { label: 'Quick Start', kind: 'dark' },
-          { label: 'Get Started Free', kind: 'light' },
         ],
       },
       setup: {
         title: 'Quick Setup',
-        description: 'Three steps from install to your first creator search.',
+        description: 'Get started in 3 simple steps.',
         steps: [
-          { title: 'Install', description: 'Run the install command in your agent.' },
-          { title: 'Configure', description: 'Set your API key and email.' },
-          { title: 'Start Using', description: 'Talk to your agent naturally.' },
+          { icon: 'rocket', title: 'Install', description: 'Run the install command in your AI agent.' },
+          { icon: 'settings', title: 'Configure', description: 'Set your API key and email address.' },
+          { icon: 'play', title: 'Start Using', description: 'Talk to your AI agent naturally to search and collect creator data.' },
         ],
-        terminal: ['npx skills add creativault/skills', 'export CV_API_KEY=your_api_key', 'export CV_USER_IDENTITY=you@company.com'],
+        terminal: [
+          '$ npx skills add creativault/skills',
+          '',
+          '# Set environment variables',
+          '$ export CV_API_KEY="your-api-key"',
+          '$ export CV_USER_IDENTITY="your@email.com"',
+        ],
       },
       value: {
         title: 'Say Goodbye to Inefficient Creator Marketing',

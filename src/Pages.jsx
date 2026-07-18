@@ -4,8 +4,8 @@
 import React, { useState } from 'react'
 import {
   ArrowRight, BarChart3, Check, ChevronDown, ChevronLeft, ChevronRight, Clock3,
-  Download, FolderOpen, Handshake, Layers, Mail, Newspaper, Search, Sparkles,
-  Users, Zap,
+  Download, FolderOpen, Handshake, Layers, Mail, Newspaper, Play, Rocket, Search,
+  Settings, Sparkles, Users, Zap,
 } from 'lucide-react'
 import { homeCopy } from './home-data.js'
 
@@ -18,6 +18,7 @@ function ArrowButtonIcon() {
 const pageIcons = {
   chart: BarChart3, users: Users, download: Download, folder: FolderOpen,
   zap: Zap, mail: Mail, handshake: Handshake, search: Search, layers: Layers, clock: Clock3,
+  rocket: Rocket, settings: Settings, play: Play,
 }
 
 export function PageHero({ kicker, title, subtitle, children }) {
@@ -234,17 +235,29 @@ export function SkillsPage() {
           <h2>{copy.setup.title}</h2>
           <p>{copy.setup.description}</p>
         </div>
-        <div className="skills-setup-grid">
-          <div className="steps-grid setup-steps">
-            {copy.setup.steps.map((step, index) => (
-              <article className="step-card" key={step.title}>
-                <span className="step-number">{String(index + 1).padStart(2, '0')}</span>
+        <div className="setup-steps-row">
+          {copy.setup.steps.map((step, index) => {
+            const Icon = pageIcons[step.icon] || Sparkles
+            return (
+              <article className="setup-step" key={step.title}>
+                <span className="setup-step-number" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+                <span className="setup-step-icon"><Icon size={22} strokeWidth={1.9} /></span>
                 <h3>{step.title}</h3>
                 <p>{step.description}</p>
               </article>
-            ))}
-          </div>
-          <pre className="terminal-block" aria-label="Install commands"><code>{copy.setup.terminal.join('\n')}</code></pre>
+            )
+          })}
+        </div>
+        <div className="terminal-block setup-terminal" aria-label="Install commands">
+          <span className="terminal-dots" aria-hidden="true"><i /><i /><i /></span>
+          <pre><code>
+            {copy.setup.terminal.map((line, index) => {
+              if (!line) return <span key={index}>{'\n'}</span>
+              if (line.startsWith('#')) return <span key={index} className="term-comment">{line}{'\n'}</span>
+              const body = line.replace(/^\$\s*/, '')
+              return <span key={index}><span className="term-prompt">$ </span>{body}{'\n'}</span>
+            })}
+          </code></pre>
         </div>
       </section>
 

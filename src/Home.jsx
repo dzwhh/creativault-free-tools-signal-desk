@@ -1,12 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react'
 import {
-  ArrowRight, BarChart3, Bot, Check, ChevronDown, ChevronLeft, ChevronRight,
-  Globe2, LineChart, Mail, Menu, Radar, Search, Sparkles,
-  TrendingUp, UserCheck, Users, X,
+  ArrowRight, Check, ChevronDown, ChevronRight,
+  Globe2, Mail, Menu, X,
 } from 'lucide-react'
-import { BrandIcon, hasBrandIcon } from './brand-icons.jsx'
 import { homeCopy } from './home-data.js'
 import { PageHero, ExtensionPage, BlogPage, ContactPage, SkillsPage } from './Pages.jsx'
+import { FeaturesSection, ToolsSection, TestimonialsSection } from './CvlpSections.jsx'
 import './home.css'
 
 function ArrowButtonIcon() {
@@ -83,166 +82,42 @@ function Hero({ navigate }) {
   )
 }
 
-function PlatformMarquee({ platforms }) {
-  const loop = [...platforms, ...platforms]
-  return (
-    <div className="platform-marquee" aria-label="Supported platforms">
-      <div className="platform-track">
-        {loop.map((name, index) => (
-          <span className="platform-chip" key={`${name}-${index}`} aria-hidden={index >= platforms.length}>
-            {hasBrandIcon(name) ? <BrandIcon name={name} size={15} /> : <Radar size={15} />}{name}
-          </span>
-        ))}
-      </div>
-    </div>
-  )
-}
-
-function Capabilities() {
-  const copy = homeCopy.capabilities
-  return (
-    <section className="home-capabilities page-container" id="features">
-      <div className="home-section-heading">
-        <h2>{copy.title}</h2>
-        <p>{copy.description}</p>
-      </div>
-      <div className="capability-grid">
-        <article className="capability-card span-2">
-          <span className="icon-badge blue"><BarChart3 size={20} strokeWidth={1.9} /></span>
-          <h3>{copy.dataCard.title}</h3>
-          <p>{copy.dataCard.description}</p>
-          <div className="capability-stat"><TrendingUp size={15} /><strong>{copy.dataCard.stat}</strong></div>
-          <PlatformMarquee platforms={copy.platforms} />
-        </article>
-
-        <article className="capability-card">
-          <span className="icon-badge amber"><LineChart size={20} strokeWidth={1.9} /></span>
-          <h3>{copy.analytics.title}</h3>
-          <p>{copy.analytics.description}</p>
-          <div className="second-bars" aria-hidden="true">
-            {[34, 58, 42, 76, 64, 90, 52, 70, 38, 82, 60, 46].map((height, index) => <i key={index} style={{ height: `${height}%` }} className={height >= 76 ? 'peak' : ''} />)}
-          </div>
-        </article>
-
-        <article className="capability-card">
-          <span className="icon-badge blue"><Bot size={20} strokeWidth={1.9} /></span>
-          <h3>{copy.agent.title}</h3>
-          <p>{copy.agent.description}</p>
-          <div className="agent-cards">
-            {copy.agent.cards.map((card) => (
-              <div className="agent-card" key={card.name}>
-                <span className="agent-avatar">{card.name.split(' ').map((word) => word[0]).join('')}</span>
-                <div><strong>{card.name}</strong><small>{card.label}</small></div>
-                <b>{card.value}</b>
-              </div>
-            ))}
-          </div>
-        </article>
-
-        <article className="capability-card">
-          <span className="icon-badge green"><UserCheck size={20} strokeWidth={1.9} /></span>
-          <h3>{copy.creators.title}</h3>
-          <p>{copy.creators.description}</p>
-        </article>
-
-        <article className="capability-card">
-          <span className="icon-badge green"><Globe2 size={20} strokeWidth={1.9} /></span>
-          <h3>{copy.global.title}</h3>
-          <p>{copy.global.description}</p>
-        </article>
-      </div>
-    </section>
-  )
-}
-
-const showcaseIcons = { 'winning-ads': Search, 'ai-partner': Bot, competitor: Radar, creator: Users }
-const showcaseStats = {
-  'winning-ads': [['Top creatives', '1,240'], ['Advertisers', '386'], ['Niches', '52']],
-  'ai-partner': [['Hooks found', '18'], ['Win rate', '+32%'], ['Time saved', '6h/wk']],
-  competitor: [['Active ads', '128'], ['New in 7d', '37'], ['Shops', '12']],
-  creator: [['Matches', '64'], ['Vetted', '100%'], ['Shortlist', '5 min']],
-}
-
-function Showcase({ hideHeading = false }) {
-  const copy = homeCopy.showcase
-  const railRef = useRef(null)
-  const [active, setActive] = useState(0)
-
-  const scrollTo = (index) => {
-    const rail = railRef.current
-    if (!rail) return
-    const clamped = Math.max(0, Math.min(copy.modules.length - 1, index))
-    rail.scrollTo({ left: clamped * rail.offsetWidth, behavior: 'smooth' })
-  }
+// Market Insight showcase — mirrors creativault.ai's hero screenshot: a dark
+// device-style frame with a scroll-driven 3D tilt (rotateX eases from 20° to 0°
+// as the frame scrolls into view).
+function MarketInsight() {
+  const frameRef = useRef(null)
+  const [progress, setProgress] = useState(0)
 
   useEffect(() => {
-    const rail = railRef.current
-    if (!rail) return
-    const onScroll = () => setActive(Math.round(rail.scrollLeft / rail.offsetWidth))
-    rail.addEventListener('scroll', onScroll, { passive: true })
-    return () => rail.removeEventListener('scroll', onScroll)
+    let ticking = false
+    const update = () => {
+      ticking = false
+      const el = frameRef.current
+      if (!el) return
+      const rect = el.getBoundingClientRect()
+      const raw = (window.innerHeight - rect.top) / (window.innerHeight * 0.85)
+      setProgress(Math.max(0, Math.min(1, raw)))
+    }
+    const onScroll = () => {
+      if (!ticking) { ticking = true; requestAnimationFrame(update) }
+    }
+    update()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    window.addEventListener('resize', onScroll)
+    return () => { window.removeEventListener('scroll', onScroll); window.removeEventListener('resize', onScroll) }
   }, [])
 
+  const rotate = 20 * (1 - progress)
+  const scale = 1 + 0.05 * (1 - progress)
   return (
-    <section className="home-showcase ambient-section">
-      <div className="page-container">
-        {!hideHeading && (
-          <div className="home-section-heading">
-            <h2>{copy.title}</h2>
-            <p>{copy.description}</p>
+    <section className="home-insight" aria-label="Market Insight preview">
+      <div className="insight-perspective">
+        <div className="insight-frame" ref={frameRef} style={{ transform: `rotateX(${rotate}deg) scale(${scale})` }}>
+          <div className="insight-screen">
+            <img src="/pic/market-insight.png" alt="CreatiVault Market Insight dashboard" width="1400" height="798" loading="lazy" draggable="false" />
           </div>
-        )}
-        <div className="showcase-rail" ref={railRef}>
-          {copy.modules.map((module) => {
-            const Icon = showcaseIcons[module.key] || Sparkles
-            return (
-              <article className="showcase-slide" key={module.key}>
-                <div className="showcase-visual" aria-hidden="true">
-                  <span className="icon-badge blue"><Icon size={22} strokeWidth={1.9} /></span>
-                  <div className="showcase-stats">
-                    {showcaseStats[module.key].map(([label, value]) => <div key={label}><small>{label}</small><strong>{value}</strong></div>)}
-                  </div>
-                </div>
-                <div className="showcase-copy">
-                  <h3>{module.title}</h3>
-                  <p>{module.description}</p>
-                </div>
-              </article>
-            )
-          })}
         </div>
-        <div className="showcase-controls">
-          <button onClick={() => scrollTo(active - 1)} aria-label="Previous" disabled={active === 0}><ChevronLeft size={18} /></button>
-          <div className="showcase-dots" role="tablist">
-            {copy.modules.map((module, index) => (
-              <button key={module.key} className={index === active ? 'active' : ''} onClick={() => scrollTo(index)} aria-label={module.title} role="tab" aria-selected={index === active} />
-            ))}
-          </div>
-          <button onClick={() => scrollTo(active + 1)} aria-label="Next" disabled={active === copy.modules.length - 1}><ChevronRight size={18} /></button>
-        </div>
-      </div>
-    </section>
-  )
-}
-
-function Testimonials() {
-  const copy = homeCopy.testimonials
-  return (
-    <section className="home-testimonials page-container">
-      <div className="home-section-heading">
-        <h2>{copy.title}</h2>
-        <p>{copy.description}</p>
-      </div>
-      <div className="testimonial-grid">
-        {copy.items.map((item) => (
-          <figure className="testimonial-card" key={item.name}>
-            <blockquote>{item.quote}</blockquote>
-            <figcaption>
-              <span className="testimonial-avatar">{item.name.split(' ').map((word) => word[0]).join('')}</span>
-              <div><strong>{item.name}</strong><small>{item.role}</small></div>
-            </figcaption>
-          </figure>
-        ))}
       </div>
     </section>
   )
@@ -363,9 +238,10 @@ export default function HomePage({ navigate, page = 'home' }) {
     home: (
       <>
         <Hero navigate={navigate} />
-        <Capabilities />
-        <Showcase />
-        <Testimonials />
+        <MarketInsight />
+        <FeaturesSection />
+        <ToolsSection />
+        <TestimonialsSection />
         <Pricing />
         <HomeFaq />
         <Newsletter />
@@ -374,16 +250,16 @@ export default function HomePage({ navigate, page = 'home' }) {
     features: (
       <>
         <PageHero title={homeCopy.showcase.title} subtitle={homeCopy.showcase.description} />
-        <Showcase hideHeading />
-        <Capabilities />
-        <Testimonials />
+        <ToolsSection hideHeading />
+        <FeaturesSection />
+        <TestimonialsSection />
         <Newsletter />
       </>
     ),
     pricing: (
       <>
         <Pricing />
-        <Testimonials />
+        <TestimonialsSection />
         <Newsletter />
       </>
     ),
