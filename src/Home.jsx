@@ -15,7 +15,7 @@ function ArrowButtonIcon() {
 export function BrandLogo({ navigate }) {
   return (
     <button className="brand" onClick={() => navigate('/')} aria-label="CreatiVault home">
-      <img className="brand-mark-img" src="/logo-mark.png" alt="" width="26" height="26" />CreatiVault
+      <img className="brand-mark-img" src="/logo-mark.png" alt="" width="26" height="26" /><span className="brand-word">CreatiVault<i className="brand-dot" aria-hidden="true" /></span>
     </button>
   )
 }

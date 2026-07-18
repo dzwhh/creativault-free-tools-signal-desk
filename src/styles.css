@@ -37,6 +37,8 @@ a { color: inherit; }
 .site-header { height: 72px; width: min(1220px, calc(100% - 48px)); margin: 0 auto; display: flex; align-items: center; justify-content: space-between; position: relative; z-index: 30; background: #fff; }
 .brand { border: 0; background: none; padding: 0; font-size: 21px; font-weight: 800; letter-spacing: -.7px; cursor: pointer; }
 .brand span { color: var(--blue); }
+.brand .brand-word { color: inherit; }
+.brand-dot { display: inline-block; width: 6px; height: 6px; margin-left: 2px; border-radius: 2px; background: var(--blue); }
 .desktop-nav { display: flex; align-items: center; gap: 2px; border: 1px solid #e6e8ec; background: #f6f7f8; padding: 3px; border-radius: 999px; position: absolute; left: 50%; transform: translateX(-50%); }
 .desktop-nav button { border: 0; background: transparent; padding: 9px 17px; border-radius: 999px; font-size: 12px; font-weight: 600; color: #49515d; cursor: pointer; }
 .desktop-nav button:first-child { color: var(--ink); background: var(--white); box-shadow: 0 1px 4px rgba(20,24,31,.06); }

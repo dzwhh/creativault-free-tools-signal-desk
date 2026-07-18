@@ -1,24 +1,24 @@
 export const hubCopy = {
   en: {
-    eyebrow: 'Free Signal Tools',
+    eyebrow: 'Free Marketing Tools',
     titleLead: 'Turn market noise into',
-    titleAccent: 'signals you can act on',
-    description: 'Check creator authenticity, competitor ads, creative performance, market benchmarks and app momentum—your first signal is free, with no sign-up required',
-    cta: 'Find your first signal',
+    titleAccent: 'insights you can act on',
+    description: 'Check creator authenticity, competitor ads, creative performance, market benchmarks and app momentum—your first tool is free, with no sign-up required',
+    cta: 'Free your first tool',
     liveLabel: 'Live samples from CreatiVault',
     trustTitle: "Clear about what’s real, what’s modeled and when it changed",
-    closingTitle: 'Your first signal is free',
+    closingTitle: 'Your first tool is free',
     closingAccent: 'Start exploring in seconds',
   },
   zh: {
-    eyebrow: '免费营销信号工具',
+    eyebrow: '免费营销工具',
     titleLead: '把市场噪音，变成',
-    titleAccent: '可执行信号',
+    titleAccent: '可执行洞察',
     description: '免费检测达人真实性、竞品广告、素材表现、行业基准与 App 增长动向，第一次查询无需注册',
-    cta: '查出第一条信号',
-    liveLabel: 'CreatiVault 实时信号样例',
+    cta: '免费使用第一个工具',
+    liveLabel: 'CreatiVault 实时样例',
     trustTitle: '清楚标注哪些是事实、哪些是估算，以及数据何时发生变化',
-    closingTitle: '你的第一条信号免费',
+    closingTitle: '你的第一个工具免费',
     closingAccent: '几秒钟开始探索',
   },
 }
@@ -56,11 +56,11 @@ export const categoryCopy = {
 
 const commonTrust = {
   en: {
-    methodology: 'We combine public platform observations with confidence-scored modeled signals. Every result includes its source, time window and known limits',
+    methodology: 'We combine public platform observations with confidence-scored modeled metrics. Every result includes its source, time window and known limits',
     limitations: 'Modeled metrics are directional estimates, not platform-reported billing or attribution data',
   },
   zh: {
-    methodology: '我们结合公开平台观测与带置信度的模型信号，每项结果都标注来源、时间窗口与已知限制',
+    methodology: '我们结合公开平台观测与带置信度的模型指标，每项结果都标注来源、时间窗口与已知限制',
     limitations: '模型指标用于方向判断，并不等同于平台账单或官方归因数据',
   },
 }
@@ -216,15 +216,15 @@ export const getTool = (slug) => tools.find((tool) => tool.slug === slug)
 
 export const uiCopy = {
   en: {
-    nav: ['Free Tools', 'Creators', 'Ads', 'Market', 'Pricing'], start: 'Start Free', run: 'Run tool', firstFree: 'First signal free', noSignup: 'No sign-up required',
-    observed: 'Observed', interpreted: 'Interpreted', next: 'Next move', complete: 'Complete analysis', paid: 'Continue with CreatiVault', related: 'Explore related signals', faq: 'Frequently asked questions', methodology: 'Methodology', limitations: 'Known limitations',
+    nav: ['Free Tools', 'Creators', 'Ads', 'Market', 'Pricing'], start: 'Start Free', run: 'Run tool', firstFree: 'First tool free', noSignup: 'No sign-up required',
+    observed: 'Observed', interpreted: 'Interpreted', next: 'Next move', complete: 'Complete analysis', paid: 'Continue with CreatiVault', related: 'Explore related tools', faq: 'Frequently asked questions', methodology: 'Methodology', limitations: 'Known limitations',
     lastChecked: 'Last checked', confidence: 'Confidence', estimated: 'Estimated', high: 'High', signupAction: 'Start Free to unlock', paidAction: 'View paid actions', retry: 'Try again', useExample: 'Use example',
-    states: { idle: 'Idle', validating: 'Validating input', running: 'Reading live signals', preview: 'Preview', signup: 'Signup gate', full: 'Full result', paid: 'Paid gate', partial: 'Partial match', noresult: 'No result', ratelimit: 'Rate limit', error: 'Error' },
+    states: { idle: 'Idle', validating: 'Validating input', running: 'Reading live data', preview: 'Preview', signup: 'Signup gate', full: 'Full result', paid: 'Paid gate', partial: 'Partial match', noresult: 'No result', ratelimit: 'Rate limit', error: 'Error' },
   },
   zh: {
-    nav: ['免费工具', '达人', '广告', '市场', '定价'], start: '免费开始', run: '运行工具', firstFree: '第一条信号免费', noSignup: '无需注册',
-    observed: 'Observed · 已观察', interpreted: 'Interpreted · 已解读', next: 'Next move · 下一步', complete: '完整分析', paid: '继续使用 CreatiVault', related: '探索相关信号', faq: '常见问题', methodology: '方法论', limitations: '已知限制',
+    nav: ['免费工具', '达人', '广告', '市场', '定价'], start: '免费开始', run: '运行工具', firstFree: '第一个工具免费', noSignup: '无需注册',
+    observed: 'Observed · 已观察', interpreted: 'Interpreted · 已解读', next: 'Next move · 下一步', complete: '完整分析', paid: '继续使用 CreatiVault', related: '探索相关工具', faq: '常见问题', methodology: '方法论', limitations: '已知限制',
     lastChecked: '最近检查', confidence: '置信度', estimated: 'Estimated · 估算', high: '高', signupAction: '免费注册并解锁', paidAction: '查看付费动作', retry: '重试', useExample: '使用示例',
-    states: { idle: '初始', validating: '正在验证输入', running: '正在读取实时信号', preview: '匿名结果', signup: '注册门槛', full: '完整结果', paid: '付费门槛', partial: '候选匹配', noresult: '无结果', ratelimit: '已达限制', error: '错误' },
+    states: { idle: '初始', validating: '正在验证输入', running: '正在读取实时数据', preview: '匿名结果', signup: '注册门槛', full: '完整结果', paid: '付费门槛', partial: '候选匹配', noresult: '无结果', ratelimit: '已达限制', error: '错误' },
   },
 }

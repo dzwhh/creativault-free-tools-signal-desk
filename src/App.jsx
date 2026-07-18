@@ -183,9 +183,9 @@ function HubPage({ locale, navigate }) {
         </section>
 
         <section className="trust-band page-container">
-          <div><i className="trust-dot blue" /><strong>Observed</strong><p>{locale === 'zh' ? '来自广告、公开数据与平台活动的直接信号' : 'Signals from live ads, public data and platform activity'}</p></div>
+          <div><i className="trust-dot blue" /><strong>Observed</strong><p>{locale === 'zh' ? '来自广告、公开数据与平台活动的直接观测' : 'Direct observations from live ads, public data and platform activity'}</p></div>
           <div><i className="trust-dot amber" /><strong>Estimated</strong><p>{locale === 'zh' ? '直接数据不可用时使用带置信度的模型洞察' : "Confidence-scored insights where direct data isn’t available"}</p></div>
-          <div><i className="trust-dot green" /><strong>Updated</strong><p>{locale === 'zh' ? '持续刷新，让你基于最新变化采取行动' : 'Continuously refreshed so you act on the latest signals'}</p></div>
+          <div><i className="trust-dot green" /><strong>Updated</strong><p>{locale === 'zh' ? '持续刷新，让你基于最新变化采取行动' : 'Continuously refreshed so you act on the latest changes'}</p></div>
           <footer>{copy.trustTitle}</footer>
         </section>
 
@@ -266,7 +266,7 @@ function EvidenceLens({ tool, locale }) {
 
 function InlineGate({ tool, locale, onUnlock }) {
   const ui = uiCopy[locale]
-  return <section className="inline-gate"><span className="gate-icon"><LockKeyhole size={19} /></span><h2>{tool.signup[locale]}</h2><p>{locale === 'zh' ? '免费注册后保留当前查询，并立即查看完整维度与判断依据' : 'Create a free account to keep this query and see every dimension behind the signal'}</p><button className="button dark" onClick={onUnlock}><LockKeyhole size={16} />{ui.signupAction}<ArrowButtonIcon /></button><LockedPreview locale={locale} /></section>
+  return <section className="inline-gate"><span className="gate-icon"><LockKeyhole size={19} /></span><h2>{tool.signup[locale]}</h2><p>{locale === 'zh' ? '免费注册后保留当前查询，并立即查看完整维度与判断依据' : 'Create a free account to keep this query and see every dimension behind the result'}</p><button className="button dark" onClick={onUnlock}><LockKeyhole size={16} />{ui.signupAction}<ArrowButtonIcon /></button><LockedPreview locale={locale} /></section>
 }
 
 function LockedPreview({ locale }) {
@@ -276,7 +276,7 @@ function LockedPreview({ locale }) {
 function FullAnalysis({ tool, locale, onPaid }) {
   const ui = uiCopy[locale]
   const reward = tool.slug === 'influencer-email-finder' || tool.slug === 'influencer-video-downloader'
-  return <section className="full-analysis"><div className="section-heading"><div><span className="section-kicker">{ui.complete}</span><h2>{locale === 'zh' ? '完整信号已经解锁' : 'Your complete signal is unlocked'}</h2></div><span className="success-chip"><Check size={16} />{locale === 'zh' ? '已保存当前查询' : 'Query preserved'}</span></div>{reward && <div className="reward-banner"><Sparkles /><div><strong>{locale === 'zh' ? '一次性免费奖励已加入账户' : 'Your one-time free reward is ready'}</strong><span>{tool.slug === 'influencer-email-finder' ? (locale === 'zh' ? '本次可以免费揭示 1 个验证邮箱' : 'Reveal one verified email free in this session') : (locale === 'zh' ? '本次可以免费完成 1 次标准质量下载' : 'Complete one standard-quality download free in this session')}</span></div></div>}<div className="full-list">{tool.fullItems[locale].map((item, index) => <div key={item}><span>{String(index + 1).padStart(2, '0')}</span><strong>{item}</strong><Check size={18} /></div>)}</div><div className="paid-actions"><div><span className="section-kicker">{ui.paid}</span><h3>{locale === 'zh' ? '把一次查询变成持续动作' : 'Turn one check into continuous action'}</h3></div><div className="paid-action-list">{tool.paid[locale].map((item) => <span key={item}><Check size={14} />{item}</span>)}</div><button className="button dark" onClick={onPaid}>{tool.paidCta[locale]}<ArrowButtonIcon /></button></div></section>
+  return <section className="full-analysis"><div className="section-heading"><div><span className="section-kicker">{ui.complete}</span><h2>{locale === 'zh' ? '完整结果已经解锁' : 'Your complete result is unlocked'}</h2></div><span className="success-chip"><Check size={16} />{locale === 'zh' ? '已保存当前查询' : 'Query preserved'}</span></div>{reward && <div className="reward-banner"><Sparkles /><div><strong>{locale === 'zh' ? '一次性免费奖励已加入账户' : 'Your one-time free reward is ready'}</strong><span>{tool.slug === 'influencer-email-finder' ? (locale === 'zh' ? '本次可以免费揭示 1 个验证邮箱' : 'Reveal one verified email free in this session') : (locale === 'zh' ? '本次可以免费完成 1 次标准质量下载' : 'Complete one standard-quality download free in this session')}</span></div></div>}<div className="full-list">{tool.fullItems[locale].map((item, index) => <div key={item}><span>{String(index + 1).padStart(2, '0')}</span><strong>{item}</strong><Check size={18} /></div>)}</div><div className="paid-actions"><div><span className="section-kicker">{ui.paid}</span><h3>{locale === 'zh' ? '把一次查询变成持续动作' : 'Turn one check into continuous action'}</h3></div><div className="paid-action-list">{tool.paid[locale].map((item) => <span key={item}><Check size={14} />{item}</span>)}</div><button className="button dark" onClick={onPaid}>{tool.paidCta[locale]}<ArrowButtonIcon /></button></div></section>
 }
 
 function PaidGate({ tool, locale }) {
@@ -289,7 +289,7 @@ function SpecialState({ state, locale, tool, setState }) {
     validating: [RefreshCw, ui.states.validating, locale === 'zh' ? '正在确认平台、URL 与对象类型' : 'Confirming platform, URL and entity type'],
     running: [Radar, ui.states.running, locale === 'zh' ? '正在读取平台观测、历史变化与同类背景' : 'Reading platform observations, history and peer context'],
     partial: [Search, ui.states.partial, locale === 'zh' ? '找到多个可能对象，请确认最符合的结果' : 'Multiple possible entities were found. Confirm the closest match'],
-    noresult: [Eye, ui.states.noresult, locale === 'zh' ? '当前公开数据不足，未生成低置信度结论' : 'There is not enough public data to produce a responsible signal'],
+    noresult: [Eye, ui.states.noresult, locale === 'zh' ? '当前公开数据不足，未生成低置信度结论' : 'There is not enough public data to produce a responsible result'],
     ratelimit: [Clock3, ui.states.ratelimit, locale === 'zh' ? '匿名额度将在 07:42:18 后重置' : 'Your anonymous allowance resets in 07:42:18'],
     error: [Zap, ui.states.error, locale === 'zh' ? '请检查输入格式，我们已经保留当前内容' : 'Check the input format. Your current value has been preserved'],
   }
@@ -305,7 +305,7 @@ function Methodology({ tool, locale }) {
 function RelatedSignals({ tool, locale, navigate, query }) {
   const ui = uiCopy[locale]
   const base = locale === 'zh' ? '/zh' : ''
-  return <section className="related page-container"><div className="section-heading"><div><span className="section-kicker">Signal chain</span><h2>{ui.related}</h2></div></div><div className="related-grid">{tool.related.map((slug) => { const related = getTool(slug); const Icon = iconMap[related.icon] || Sparkles; return <button key={slug} onClick={() => navigate(`${base}/free-tools/${slug}?q=${encodeURIComponent(query || tool.sample)}`)}><span><Icon size={22} /></span><div><strong>{related.shortName[locale]}</strong><small>{related.benefit[locale]}</small></div><ChevronRight size={18} /></button> })}</div></section>
+  return <section className="related page-container"><div className="section-heading"><div><span className="section-kicker">Keep exploring</span><h2>{ui.related}</h2></div></div><div className="related-grid">{tool.related.map((slug) => { const related = getTool(slug); const Icon = iconMap[related.icon] || Sparkles; return <button key={slug} onClick={() => navigate(`${base}/free-tools/${slug}?q=${encodeURIComponent(query || tool.sample)}`)}><span><Icon size={22} /></span><div><strong>{related.shortName[locale]}</strong><small>{related.benefit[locale]}</small></div><ChevronRight size={18} /></button> })}</div></section>
 }
 
 function FAQ({ tool, locale }) {
@@ -327,7 +327,7 @@ const benefitAccents = {
   'influencer-brand-collaboration-checker': { en: 'already trust this creator', zh: '已经与这个达人合作' },
   'competitor-ad-tracker': { en: 'launch, scale or retire ads', zh: '上新、起量或下线素材' },
   'ad-creative-performance-analyzer': { en: 'truly outperforming', zh: '正在跑赢同类' },
-  'ad-creative-lifecycle-checker': { en: 'starts losing momentum', zh: '看见疲劳信号' },
+  'ad-creative-lifecycle-checker': { en: 'starts losing momentum', zh: '看见疲劳迹象' },
   'advertising-benchmark-report': { en: 'market you actually compete in', zh: '校准你的投放 KPI' },
   'app-game-downloads-revenue-tracker': { en: 'real market momentum', zh: '市场动量' },
 }
@@ -394,7 +394,7 @@ function ToolPage({ tool, locale, navigate }) {
 
 function SiteFooter({ locale, navigate }) {
   const base = locale === 'zh' ? '/zh' : ''
-  return <footer className="site-footer"><button className="brand" onClick={() => navigate(`${base}/free-tools`)}><img className="brand-mark-img" src="/logo-mark.png" alt="" width="26" height="26" />CreatiVault</button><p>{locale === 'zh' ? '把市场变化变成可执行信号' : 'Turn market change into actionable signals'}</p><span>© 2026 CreatiVault</span></footer>
+  return <footer className="site-footer"><button className="brand" onClick={() => navigate(`${base}/free-tools`)}><img className="brand-mark-img" src="/logo-mark.png" alt="" width="26" height="26" /><span className="brand-word">CreatiVault<i className="brand-dot" aria-hidden="true" /></span></button><p>{locale === 'zh' ? '把市场变化变成可执行洞察' : 'Turn market change into actionable insights'}</p><span>© 2026 CreatiVault</span></footer>
 }
 
 function updateSeo(tool, locale) {
@@ -440,7 +440,7 @@ function updateSeo(tool, locale) {
     applicationCategory: 'BusinessApplication',
     operatingSystem: 'Web browser',
     url: `${baseUrl}${pagePath}`,
-    offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD', description: locale === 'zh' ? '第一条信号免费' : 'First signal free' },
+    offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD', description: locale === 'zh' ? '第一个工具免费' : 'First tool free' },
     provider: { '@type': 'Organization', name: 'CreatiVault', url: baseUrl },
   } : {
     '@type': 'ItemList',
